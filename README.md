@@ -1,19 +1,6 @@
 # RbimsRladies2024
 
-```{r, include = FALSE, echo=FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
-
-
 ## Introducción a Rbims en R <img src="figures/Logo-rRbiMs.png"  width="150" height="150" align="right" />
-
-
-
 
 ¡Saludos cordiales!
 
