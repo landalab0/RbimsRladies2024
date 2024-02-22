@@ -1,9 +1,6 @@
 # RbimsRladies2024
 
-## Introducción a Rbims en R
-
-
-```{r, include = FALSE}
+```{r, include = FALSE, echo=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -13,14 +10,16 @@ knitr::opts_chunk$set(
 ```
 
 
-# **Rbims**  <img src="man/figures/Logo-rRbiMs.png"  width="150" height="150" align="right" />
+## Introducción a Rbims en R <img src="figures/Logo-rRbiMs.png"  width="150" height="150" align="right" />
+
+
 
 
 ¡Saludos cordiales!
 
 En esta sesión de R ladies aprenderemos a utilizar el paquete **Rbims** para el análisis de metabólico de genomas, dónde podremos cargar datos de predicciones funcionales realizadas con diferentes bases de datos (dbCAN, InterproScan, KEGG, eentre otros) además de manipuarlos y  visualizar los datos funcionales obtenidos.
 
-## TEMARIO
+## Temas
 
 + Introducción a Rbims
   + Ecología microbiana y Metagenómica
@@ -39,7 +38,7 @@ Lunes 4 de marzo de 2024
 
 Karla funge como asistente de investigación en el instituto de Ciencias del Mar y Limnología. Recientemente ha estado trabajando como desarrolladora en mejoras del paquete Rbims. 
 
-- Stephanie Elizabeth Hereira Pacheco
+- Ph.D. Stephanie Elizabeth Hereira Pacheco
 
 Stephanie es investigadora del Centro de Investigación en Ciencias Biológicas de la Universidad Autónoma de Tlaxcala. Tiene experiencias en análisis bioinformáticos y estadísticos y en programación en el lenguaje R. 
 
