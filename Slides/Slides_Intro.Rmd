@@ -1,0 +1,190 @@
+---
+title: "![](../figures/Logo_rRbiMs.png){width=5.2in}"
+subtitle: "Introducción a Rbims en R"
+author: 
+  - "PhD. Stephanie Hereira Pacheco"
+  - "Karla Paola López Martínez"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: [rladies, rladies-fonts]
+    self_contained: true    
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+```
+
+```{r xaringanExtra-clipboard, echo=FALSE}
+xaringanExtra::use_clipboard()
+```
+
+```{r xaringan-fit-screen, echo=FALSE}
+xaringanExtra::use_fit_screen()
+```
+
+```{r xaringan-tachyons, echo=FALSE}
+xaringanExtra::use_tachyons()
+```
+
+```{r xaringan-panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+```
+
+
+## `r fontawesome::fa("list")` Temario
+
+- Ecología Microbiana
+
+- Genómica y Metagenómica
+
+- Genomas ensamblados a partir de Metagenomas (MAGs)
+
+- Anotación funcional
+
+- Bases de datos
+
+---
+
+# Ecología microbiana
+.bg-washed-blue.b--purple.ba.bw2.br3.shadow-5.ph4.mt5[
+El estudio de la ecología microbiana comprende desde las células indivuales hasta sistemas complejos de diferentes tipos de microorganismos.
+
+Respondiendo preguntas cómo:
+
+- ¿Qué microorganismos están presentes?
+
+- ¿Cuál es el rol de cada especie?
+
+- ¿Qué interacciones ocurren en el ambiente?
+
+- ¿Cómo los microorganismos cambian el ambiente?
+
+
+.tr[
+ Barton, L. L., & Northup, D. E. (2011).
+]]
+
+---
+
+# Genómica 
+
+**La genómica es el estudio de todos los genes de un individuo (condificantes y no), incluyendo las interacciones de estos genes con cada uno y con el ambiente. Cuando hablamos de genómica además de genes, hablamos de: funciones, evolución, mapeo y edición de genomas.** 
+
+.panelset[
+.panel[.panel-name[ADN]
+
+El ácido desoxirribonucleico es el compuesto químico que contiene las instrucciones necesarias para desarrollar y dirigir las actividades necesarias de los organismos vivos. 
+
+]
+
+.panel[.panel-name[Genoma]
+
+Es el conjunto completo de ADN se llama su genoma. 
+
+]
+
+.panel[.panel-name[Secuenciación de ADN]
+
+Se refiere a determinar el orden exacto de las bases en una cadena de ADN. La más común es la secuenciación por síntesis donde la ADN-polimerasa se usa para generar una nueva cadena de ADN de una hebra de interés. 
+
+]
+]
+```{r, echo=FALSE, out.width="50%", fig.align='center'}
+knitr::include_graphics("https://www.genome.gov/sites/default/files/inline-images/Guide_Genomics_Fact-sheet2020.jpg")
+```
+
+---
+# Metagenómica
+
+.bg-washed-blue.b--purple.ba.bw2.br3.shadow-5.ph4.mt5[
+Es el análisis del ADN genómico de una comunidad completa; esto la diferencia de la genómica, que es el análisis del ADN genómico de un organismo o célula individual. 
+
+De hecho, la traducción más apropiada de "meta" en griego es "más allá", por lo que el término literalmente significa "más allá del estudio del genoma único". 
+
+
+.tr[
+ Handelsman, 1998; Gilbert & Dupont, 2010.
+]]
+
+
+.panelset[
+.panel[.panel-name[Cultivables]
+
+Se estima que < 1% de los microorganismos que existen puede ser cultivados 
+
+
+]
+
+.panel[.panel-name[Observables]
+
+La mayoría son demasiado pequeños para incluso ser observados en microscopio
+
+]
+
+.panel[.panel-name[Secuenciados]
+
+1.6 billones de secuencias nucleotídidas de 450 000 especies formalmente descritas hasta el 2019
+ 
+
+]
+]
+
+---
+# MAGs 
+
+- Los genomas ensamblados en metagenomas (MAG) son genomas microbianos reconstruidos a partir de datos de metagenomas. 
+
+- En los últimos años, se han informado en la literatura miles de MAGs para una variedad de entornos y microbiotas asociadas a un hospedero.
+
+- Los MAGs nos han ayudado a comprender mejor las poblaciones microbianas y sus interacciones con el entorno donde viven; Además, la mayoría de los MAGs pertenecen a especies nuevas, lo que ayuda a disminuir la llamada materia oscura microbiana. 
+
+
+---
+background-image: url(https://raw.githubusercontent.com/Steph0522/Taller_R_Bioinformatica/main/images/meta52.jpg)
+
+
+background-size: contain
+
+---
+background-image: url(https://ars.els-cdn.com/content/image/1-s2.0-S2001037021004931-gr1.jpg)
+background-position: 50% 50%
+
+
+class: right, top
+
+(Yang et al., 2021)
+
+---
+
+# Anotación funcional
+
+Un componente principal del análisis metagenómico es descubrir qué están haciendo realmente los organismos en su muestra. Básicamente es buscar secuencias conocidas que tienen una función asociada o pueden estar relacionadas con una serie de funciones. Algunos enfoques son:
+
+>- Predicción de genes: [MGRAST](https://www.mg-rast.org/), [Prodigal](https://github.com/hyattpd/Prodigal) y  [Prokka](https://github.com/tseemann/prokka).
+
+>- Inferencia funcional asociada al gen marcador: muy útil para la metagenómica dirigida. Puede extrapolar la función si está presente un gen asociado. [MinPath](https://omics.informatics.indiana.edu/MinPath).
+>- Análisis de genes marcadores: el enfoque más rápido y sencillo, busque sus lecturas en una base de datos de genes conocidos con función conocida. [HUMAnN2](https://huttenhower.sph.harvard.edu/humann2/), [MEGAN6](https://computomics.com/services/megan6.html) y [SUPER FOCUS](https://github.com/metageni/SUPER-FOCUS).
+
+---
+
+# Bases de datos
