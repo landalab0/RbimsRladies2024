@@ -1,6 +1,6 @@
 ---
-title: "![](../figures/Logo_rRbiMs.png){width=5.2in}"
-subtitle: "Introducción a Rbims en R"
+subtitle: "![](figures/Logo-rRbiMs.png){width=2in}"
+title: "Introducción a Rbims en R"
 author: 
   - "PhD. Stephanie Hereira Pacheco"
   - "Karla Paola López Martínez"
@@ -152,12 +152,12 @@ La mayoría son demasiado pequeños para incluso ser observados en microscopio
 ---
 # MAGs 
 
-- Los genomas ensamblados en metagenomas (MAG) son genomas microbianos reconstruidos a partir de datos de metagenomas. 
+####`r fontawesome::fa("dna")`  Los genomas ensamblados en metagenomas (MAG) son genomas microbianos reconstruidos a partir de datos de metagenomas. 
 
-- En los últimos años, se han informado en la literatura miles de MAGs para una variedad de entornos y microbiotas asociadas a un hospedero.
+####`r fontawesome::fa("dna")` En los últimos años, se han informado en la literatura miles de MAGs para una variedad de entornos y microbiotas asociadas a un hospedero.
 
-- Los MAGs nos han ayudado a comprender mejor las poblaciones microbianas y sus interacciones con el entorno donde viven; Además, la mayoría de los MAGs pertenecen a especies nuevas, lo que ayuda a disminuir la llamada materia oscura microbiana. 
-
+####`r fontawesome::fa("dna")` Los MAGs nos han ayudado a comprender mejor las poblaciones microbianas y sus interacciones con el entorno donde viven; Además, la mayoría de los MAGs pertenecen a especies nuevas, lo que ayuda a disminuir la llamada materia oscura microbiana. 
+ 
 
 ---
 background-image: url(https://raw.githubusercontent.com/Steph0522/Taller_R_Bioinformatica/main/images/meta52.jpg)
@@ -188,3 +188,15 @@ Un componente principal del análisis metagenómico es descubrir qué están hac
 ---
 
 # Bases de datos
+
+- InterPro
+
+- dbCAN3 (CAZyme annotation)
+
+- PICRUSt2
+
+- KO (KEGG ORTHOLOGY) 
+
+---
+
+# Referencias
