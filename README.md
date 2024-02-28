@@ -21,9 +21,9 @@ Lunes 4 de marzo de 2024
 
 ## Facilitadoras:
 
-- Karla Paola López Martínez
+- Biól. Karla Paola López Martínez
 
-Karla funge como asistente de investigación en el instituto de Ciencias del Mar y Limnología. Recientemente ha estado trabajando como desarrolladora en mejoras del paquete Rbims. 
+Karla funge como asistente de investigación en el Instituto de Ciencias del Mar y Limnología. Recientemente ha estado trabajando como desarrolladora en mejoras del paquete Rbims. 
 
 - Ph.D. Stephanie Elizabeth Hereira Pacheco
 
