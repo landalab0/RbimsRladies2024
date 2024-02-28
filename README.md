@@ -61,7 +61,7 @@ O usar el comando `git clone https://github.com/landalab0/RbimsRladies2024.git `
 
 + Paquetes de R: tidyverse y rstatix, los cuades puedes instalar con la instrucción:
 
-`install.packages(c("rstatix", "tidyverse"), dependencies = TRUE)`
+`install.packages(c("rstatix", "tidyverse", "readxl"), dependencies = TRUE)`
 
 
 ## Código de Conducta
