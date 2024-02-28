@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="author" content="PhD. Stephanie Hereira Pacheco" />
     <meta name="author" content="Karla Paola López Martínez" />
-    <meta name="date" content="2024-02-25" />
+    <meta name="date" content="2024-02-28" />
     <script src="Slides_Intro_files/header-attrs/header-attrs.js"></script>
     <link href="Slides_Intro_files/remark-css/rladies.css" rel="stylesheet" />
     <link href="Slides_Intro_files/remark-css/rladies-fonts.css" rel="stylesheet" />
@@ -39,7 +39,7 @@ class: center, middle, inverse, title-slide
 ### Karla Paola López Martínez
 ]
 .date[
-### 2024-02-25
+### 2024-02-28
 ]
 
 ---
@@ -194,13 +194,50 @@ Un componente principal del análisis metagenómico es descubrir qué están hac
 
 # Bases de datos
 
-- InterPro
 
-- dbCAN3 (CAZyme annotation)
+.panelset[
+.panel[.panel-name[EC]
+
+**Códigos de la Comisión Enzimática:**
+
+Es una nomenclatura numérica usada para clasificar enzimas basado en las reacciones químicas que catalizan. 
+Como sistema de nomenclatura enzimática, cada número EC está asociado con un nombre recomendado para la reacción catalizada por enzima correspondiente.
+Cada enzima se asigna a un número de cuatro partes, que representa la clase (principal, ej: hidrolasa, ligasa, transferasa, etc.), la subclase (tipo de compuesto, ej: Carbono, Fósforo), la sub-subclase (ej: formil) y el número de entrada (ej: D-Alanina).
+
+]
+
+.panel[.panel-name[COG]
+**Clusters de grupos hortólogos:**
+
+Es una base de datos que clasifica proteínas en grupos ortólogos, es decir, genes o proteínas que se encuentran en diferentes especies y provienen de un acentro común. Cada COG se define como el grupo de tres o más proteínas que son Ortólogas. Han sido desarrollados mediante la comparación, todos contra todos, de secuencias de proteínas codificadas en genomas completos secuenciados, utilizando el p do el programa BLAST.
+
+
+]
+
+.panel[.panel-name[KO]
+
+**Ortólogos KEGG:** 
+
+Es una clasificación de genes en función de ortología basada en la enciclopedia de genes y genomas de Kyoto (KEGG). Proporciona una forma de asignar funciones a partir de genes y ayuda a comprender las vías metabólicas y las funciones biológicas a nivel molecular.
+
+]
+
+.panel[.panel-name[dbCAN3]
+
+]
+ (CAZyme annotation)
 
 - PICRUSt2
 
-- KO (KEGG ORTHOLOGY) 
+- PFAM
+
+.panel[.panel-name[Interpro]
+
+La mayoría son demasiado pequeños para incluso ser observados en microscopio
+
+]
+
+]
 
 ---
 
