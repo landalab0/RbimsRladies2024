@@ -195,16 +195,25 @@ Un componente principal del análisis metagenómico es descubrir qué están hac
 
 **Códigos de la Comisión Enzimática:**
 
-Es una nomenclatura numérica usada para clasificar enzimas basado en las reacciones químicas que catalizan. 
-Como sistema de nomenclatura enzimática, cada número EC está asociado con un nombre recomendado para la reacción catalizada por enzima correspondiente.
-Cada enzima se asigna a un número de cuatro partes, que representa la clase (principal, ej: hidrolasa, ligasa, transferasa, etc.), la subclase (tipo de compuesto, ej: Carbono, Fósforo), la sub-subclase (ej: formil) y el número de entrada (ej: D-Alanina).
+- Es una nomenclatura numérica usada para clasificar enzimas basado en las reacciones químicas que catalizan. 
+
+- Como sistema de nomenclatura enzimática, cada número EC está asociado con un nombre recomendado para la reacción catalizada por enzima correspondiente.
+
+- Cada enzima se asigna a un número de cuatro partes, que representa la clase (principal, ej: hidrolasa, ligasa, transferasa, etc.), la subclase (tipo de compuesto, ej: Carbono, Fósforo), la sub-subclase (ej: formil) y el número de entrada (ej: D-Alanina).
+
+- ejemplo: EC.1.2.4.5.
 
 ]
 
 .panel[.panel-name[COG]
 **Clusters de grupos hortólogos:**
 
-Es una base de datos que clasifica proteínas en grupos ortólogos, es decir, genes o proteínas que se encuentran en diferentes especies y provienen de un acentro común. Cada COG se define como el grupo de tres o más proteínas que son Ortólogas. Han sido desarrollados mediante la comparación, todos contra todos, de secuencias de proteínas codificadas en genomas completos secuenciados, utilizando el p do el programa BLAST.
+
+- Es una base de datos que clasifica proteínas en grupos ortólogos, es decir, genes o proteínas que se encuentran en diferentes especies y provienen de un acentro común.
+
+
+
+- Cada COG se define como el grupo de tres o más proteínas que son Ortólogas. Han sido desarrollados mediante la comparación, todos contra todos, de secuencias de proteínas codificadas en genomas completos secuenciados, utilizando el programa BLAST.
 
 
 ]
@@ -213,27 +222,99 @@ Es una base de datos que clasifica proteínas en grupos ortólogos, es decir, ge
 
 **Ortólogos KEGG:** 
 
-Es una clasificación de genes en función de ortología basada en la enciclopedia de genes y genomas de Kyoto (KEGG). Proporciona una forma de asignar funciones a partir de genes y ayuda a comprender las vías metabólicas y las funciones biológicas a nivel molecular.
+- Es una clasificación de genes en función de ortología basada en la enciclopedia de genes y genomas de Kyoto (KEGG). 
+
+- Proporciona una forma de asignar funciones a partir de genes y ayuda a comprender las vías metabólicas y las funciones biológicas a nivel molecular.
 
 ]
 
 .panel[.panel-name[dbCAN3]
 
+- Esta base de datos se enfoca en la anotación de enzimas de la clase de hidrólisis de glicosilos (CAZyme), que están involucradas en la degradación y síntesis de carbohidratos. 
+
+- Específicamente, dbCAN se utiliza para identificar y clasificar enzimas CAZyme en secuencias de proteínas.
+
 ]
- (CAZyme annotation)
 
-- PICRUSt2
-
-- PFAM
 
 .panel[.panel-name[Interpro]
 
-La mayoría son demasiado pequeños para incluso ser observados en microscopio
+- [Interpro](https://academic.oup.com/nar/article/51/D1/D418/6814474) proporciona análisis funcional de proteínas clasificándolas en familias y prediciendo dominios y sitios importantes.
+
+- Para clasificar las proteínas de esta manera, InterPro utiliza modelos predictivos, usando varias bases de datos diferentes para producir una poderosa base de datos integrada y una herramienta de diagnóstico:
+
+ + CDD 
+ + HAMAP 
+ + PANTHER  
+ + Pfam 
+ + PIRSF 
+ + PRINTS 
+ + PROSITE 
+ + SMART 
+ + SFLD 
+ + SUPERFAMILY
+ + TIGRFAMs 
 
 ]
 
+
+.panel[.panel-name[PICRUSt2]
+Es una herramienta de predicción de las funciones metagenómicas con datos de amplicón
+
+ + EC
+ + KO
+ + Rutas: Metacyc (MinPath)
+ + PFAM y TIGRFAMs
+
 ]
+]
+
+---
+# RbiMs 
+
+
+.bg-washed-blue.b--purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+Es un paquete de R que nos permite **importar**, **manipular**, **analizar** y **visualizar** los datos obtenidos por varias bases de datos y herramientas de asginación funcional.
+
+
+]
+
+.bg-washed-green.b--green.ba.bw2.br3.shadow-5.ph4.mt5[
+
+**Ventajas:**
+
+- Reproducibilidad
+
+- Permite definir rutas metabólicas de nuestro interés
+
+- Incluye herramientas de visualización de ggplot2 lo que las hace customizables
+]
+---
+
+# Funcionamiento de RbiMs
+
+```{r, echo=FALSE, out.width="100%", fig.align='center'}
+knitr::include_graphics("figures/rbims3.png")
+```
+
+
+---
+```{r, echo=FALSE, out.width="100%", fig.align='center'}
+knitr::include_graphics("figures/rbmis2.jpg")
+```
+
+
 
 ---
 
 # Referencias
+
+- [Rbims](https://github.com/mirnavazquez/RbiMs)
+- [Interpro](https://www.ebi.ac.uk/interpro/)
+- [dbcan3](https://academic.oup.com/nar/article/51/W1/W115/7147496)
+- [PICRUSt2](https://github.com/picrust/picrust2)
+- [Barton, L. L., & Northup, D. E. (2011)](https://books.google.com.mx/books?hl=es&lr=&id=51Rt3X9UMfIC&oi=fnd&pg=PR17&dq=Barton,+L.+L.,+%26+Northup,+D.+E.+(2011&ots=F28g5mo8mp&sig=iD1MR12f46fRDfIRiNWJ0q52qzg&redir_esc=y#v=onepage&q=Barton%2C%20L.%20L.%2C%20%26%20Northup%2C%20D.%20E.%20(2011&f=false)
+- [Handelsman, 1998; Gilbert & Dupont, 2010](https://www.annualreviews.org/doi/abs/10.1146/annurev-marine-120709-142811)
+- [Yang et al., 2021](https://www.sciencedirect.com/science/article/pii/S2001037021004931)
+- [astromike.github.io](https://astrobiomike.github.io/genomics/metagen_anvio)
