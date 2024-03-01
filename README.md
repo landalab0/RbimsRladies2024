@@ -1,4 +1,4 @@
-# RbimsRladies2024
+# RbimsRladies2024 
 
 ## Introducción a Rbims en R <img src="Slides/figures/Logo-rRbiMs.png"  width="150" height="150" align="right" />
 
