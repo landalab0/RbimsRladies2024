@@ -63,6 +63,8 @@ xaringanExtra::use_panelset()
 
 - Bases de datos
 
+- Rbims y su funcionamiento
+
 ---
 
 # Ecología microbiana
