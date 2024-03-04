@@ -13,12 +13,12 @@ library(readxl)
 #Explorando el metabolismo de la base de datos Interpro --------------------####
 #(recuperando los datos de Pfam): 
 
-interpro_PFAMs_profile_T<-read_interpro(data_interpro = "Datos/Interpro/", 
+interpro_PFAMs_profile_T<-read_interpro(data_interpro = "Datos_rbims/Interpro/", 
                                         database="Pfam", profile = T) 
 
 #El perfil puede visualizarse en un formato mas extenso:
 
-interpro_PFAMs_profile_F<-read_interpro(data_interpro = "Datos/Interpro/", 
+interpro_PFAMs_profile_F<-read_interpro(data_interpro = "Datos_rbims/Interpro/", 
                                        database="Pfam", profile = F) 
 
 #Obtenemos las familias mas importantes. La función PCA.
@@ -45,7 +45,7 @@ plot_heatmap(important_PFAMs_ind,
              distance = F)
 
 #Graficando: Plot bubble
-metadata <- read_xlsx("meta.xlsx")
+metadata <- read_xlsx("Datos_rbims/meta.xlsx")
 
 plot_bubble(important_PFAMs_ind, 
             y_axis=Pfam, 
@@ -61,7 +61,7 @@ plot_bubble(important_PFAMs_ind,
 
 
 interpro_INTERPRO_profile<-read_interpro(data_interpro = 
-                                           "Datos/Interpro/", 
+                                           "Datos_rbims/Interpro/", 
                                          database="INTERPRO", profile = T)
 
 #Nos interesan las abundancias de familias especificas de proteínas 
@@ -88,7 +88,7 @@ plot_bubble(alkane_INTERPRO,
 
 # Leyendo nuestros datos provenientes de KEGG ------------------------------####
 
-ko_table<-read_ko(data_kofam ="Datos/KEGG/") 
+ko_table<-read_ko(data_kofam ="Datos_rbims/KEGG/") 
  
 # Mapeamos la base de datos oficial de KEGG con nuestros datos
 
@@ -171,11 +171,11 @@ plot_heatmap(tibble_ko=hydrocarbon_degradation,
 
 #(recuperando los datos de las familias de enzimas): 
 
-dbcan_FAMs_profile_T<-read_dbcan3(dbcan_path = "Datos/dbCAN/", profile = T) 
+dbcan_FAMs_profile_T<-read_dbcan3(dbcan_path = "Datos_rbims/dbCAN/", profile = T) 
 
 #El perfil puede visualizarse en un formato mas extenso:
 
-dbcan_FAMs_profile_F<-read_dbcan3(dbcan_path = "Datos/dbCAN/",  profile = F) 
+dbcan_FAMs_profile_F<-read_dbcan3(dbcan_path = "Datos_rbims/dbCAN/",  profile = F) 
 
 #Obtenemos las familias mas importantes. La función PCA.
 
@@ -201,7 +201,7 @@ plot_heatmap(important_dbcanFAMs,
              distance = F)
 
 #Graficando: Plot bubble
-metadata <- read_xlsx("meta.xlsx")
+metadata <- read_xlsx("Datos_rbims/meta.xlsx")
 
 plot_bubble(important_dbcanFAMs, 
             y_axis=dbCAN_fam, 
