@@ -277,7 +277,7 @@ Es una herramienta de predicción de las funciones metagenómicas con datos de a
 
 .bg-washed-blue.b--purple.ba.bw2.br3.shadow-5.ph4.mt5[
 
-Es un paquete de R que nos permite **importar**, **manipular**, **analizar** y **visualizar** los datos obtenidos por varias bases de datos y herramientas de asginación funcional.
+Es un paquete de R que nos permite **importar**, **manipular**, **analizar** y **visualizar** los datos obtenidos por varias bases de datos y herramientas de asignación funcional.
 
 
 ]
