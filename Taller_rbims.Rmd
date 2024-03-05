@@ -1,0 +1,394 @@
+---
+title: "Taller_rbims"
+author: "Karla López"
+date: "2024-02-26"
+output:
+  html_document:
+    theme: cosmo
+    highlight: kate
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**INSTALACIÓN**
+
+Primero vamos a correr las librerias necesarias para instalar rbims
+
+```{r libraries, message=FALSE, warning=FALSE}
+
+library(devtools)
+library(tidyverse)
+library(tidyr)
+install_github("mirnavazquez/RbiMs", force = T)
+library(rbims)
+library(readxl)
+
+```
+
+1.**ANÁLISIS DE INTERPRO A TRAVÉS DE RBIMS**
+
+Rbims puede leer los datos provenientes de una anotación con Interpro y recuperar datos de abundancias para Pfam, Interpro IDs, TigerFam, KEGG, etc. Es decir, calcula las abundancias del atributo escogido para cada bin.
+La funcíon que se utiliza es read_interpro y cuando escogemos el argumento profile = TRUE, rbims nos arroja una tabla resumida de abundancias.
+
+```{r read_interpro_T, message=FALSE, warning=FALSE}
+interpro_PFAM_profile_T<-read_interpro(data_interpro = "../Datos_rbims/Interpro/", database="Pfam", profile = T)
+
+head(interpro_PFAM_profile_T)
+```
+
+Cuando escogemos el argumento profile = FALSE, rbims nos arroja una version mas extensa de estos resultados. 
+
+```{r read_interpro_F}
+interpro_PFAM_profile_F<-read_interpro(data_interpro = "../Datos_rbims/Interpro/", 
+                                        database="Pfam", profile = F)
+head(interpro_PFAM_profile_F)
+```
+
+2.**CÁLCULO DE CONTRIBUCIONES**
+Rbims puede hacer un analisis PCA que nos ayuda a obtener las contribuciones (PFAM) más importantes en nuestro set de datos, es decir, aquellas familias de proteinas que mejor explican la variación de nuestros datos.  
+La función que ofrece rbims es get_subset_pca. Usa tres argumentos indispensables: la tabla de abundancias (proveniente de read_interpro), el valor de contribución, el tipo de análisis/atributo que estamos utilizando y el tipo de pca a realizar (sobre individuos, variables o ambos).
+
+```{r pca, message=FALSE, warning=FALSE}
+important_PFAMs_ind<-get_subset_pca(tibble_rbims=interpro_PFAM_profile_T, 
+                                cos2_val=0.98,
+                                analysis="Pfam",
+                                pca = "Individual")
+head(important_PFAMs_ind)
+```
+
+3.**HEATMAP**
+*El argumento de la distancia.*
+
+Rbims puede generar heatmaps, con los resultados obtenidos anteriormente, podemos graficar los resultados. La funcion tiene las siguientes opciones:
+**tibble_ko:** el subset que acabamos de generar
+**y_axis:** el valor que se graficara en el eje y (Pfam/Interpro). Todos los valores del eje x corresponden a los individuos (bins). 
+**analysis:** una tabla proveniente de las funciones read. Corresponde al análisis utilizado para la anotación. 
+**scale_option:** una opcion para indicarle si las filas o columnas deberian escalarse. Los valores válidos son: "none" "row" "column".
+**color_pallet:** (opcional) un vector de caracteres indicando la paleta de colores.
+**distance:** (optional) si es TRUE calculará cómo se podrian agrupar los bins de acuerdo con las similitudes dentro de la caracteristica deseada (PFAM).
+
+```{r heatmap_T}
+plot_heatmap(important_PFAMs_ind, 
+             y_axis=Pfam, 
+             analysis = "INTERPRO",
+             scale_option = "none",
+             distance = T)
+
+```
+
+**distance:** (optional) si es FALSE mostrará las abundancias de la caracteristica deseada (PFAM) en todos los bins y cómo se agrupan. 
+
+```{r heatmap_F}
+
+plot_heatmap(important_PFAMs_ind, 
+             y_axis=Pfam, 
+             analysis= "INTERPRO",
+             scale_option = "none",
+             distance = F)
+```
+
+4.**PLOT BUBBLE**
+Rbims puede representar los datos en forma de burbujas a través de la función plot_bubble. Los argumentos son similares que en el heatmap.
+
+**tibble_ko:** la tabla el subset que acabamos de generar
+**x_axis:** corresponde al eje x, puede tomar cualquier valor de las columnas de metabolismo.
+**y_axis:** corresponde al eje y, puede tomar cualquier valor de las columnas de metabolismo.
+**calc:** el tipo de cálculo que realizará rbims, los valores válidos son: Abundance y Binary. 
+**analysis:** una tabla proveniente de las funciones read. Corresponde al análisis utilizado para la anotación. 
+**data_experiment:** (opcional), una base de metadatos.
+**color_character:** (opcional), corresponde a alguna columna de metadatos o caracteristica del metabolismo. 
+**order_bins:** (opcional), un vector indicando el orden en el que aparecerán los bins.
+**order_metabolism:** (opcional), un vector indicando el orden en el que aparecerá la caracteristica deseada (pfam/Interpro ID). 
+**color_pallet:** (opcional) un vector de caracteres indicando la paleta de colores.
+**range_size:** un vector numerico indicando el rango de tamaño de los puntos. 
+**x_labs:** (opcional). Da el nombre al eje x.
+**y_labs:** (opcional). Da el nombre al eje y. 
+**text_x:** (opcional). Un vector numerico que indica el tamaño del texto en el eje x. 
+**text_y:** (opcional). Un vector numerico que indica el tamaño del texto en el eje y. 
+
+```{r message=FALSE, warning=FALSE}
+metadata <- read_xlsx("../meta.xlsx")
+plot_bubble(important_PFAMs_ind, 
+            y_axis=Pfam, 
+            x_axis=Bin_name, 
+            calc = "Binary",
+            analysis = "INTERPRO", 
+            data_experiment = metadata, 
+            color_character = Bin_name)
+```
+
+5.**VÍAS ESPECÍFICAS**
+Rbims ofrece una función que permite hacer un subset de vías metabolicas específicas. Esto le permite amoldarse a la pregunta de investigación.
+Para este ejemplo, usaremos la funcion read_interpro nuevamente para recuperar todos los datos de abundancias de los IDs de Interpro. 
+
+```{r}
+interpro_INTERPRO_profile<-read_interpro(data_interpro = 
+                                           "../Datos_rbims/Interpro/", 
+                                         database="INTERPRO", profile = T)
+head(interpro_INTERPRO_profile)
+```
+
+Nos interesan las proteinas que están involucradas con la degradación de hidrocarburos. Buscando directamente en la pagina web de la base de datos encontramos lo siguiente:
+
+```{r}
+
+alkane_degradation <- c("IPR033885", "IPR048133","IPR012078","IPR003430")
+
+alkane_INTERPRO<-get_subset_pathway(interpro_INTERPRO_profile, 
+                                      type_of_interest_feature=INTERPRO,
+                                      interest_feature=alkane_degradation)
+head(alkane_INTERPRO)
+```
+
+1.**RECUPERANDO DATOS DE KEGG A PARTIR DE INTERPRO**
+Esta funcion solo es apta si corriste tu anotación con interpro con la opción --pathway.
+De esta forma rbims puede recuperar los IDs de KEGG (dentro de interpro) y mapear las rutas metabólicas de nuestros datos, a pesar de no haber hechi anotaciones con KEGG. 
+
+*Nota: Los datos que usamoas en este taller no contienen los identificadores de KEGG, pero el workflow luce asi:*
+
+1.Comenzamos leyendo nuestro output de KEGG en una tabla que calcula las abundancias 
+```{r eval=FALSE}
+
+H_interpro_KEGG_long<-read_interpro(data_interpro = "../Datos_rbims/Interpro/", 
+                                    database="KEGG")
+head(interpro_KEGG_long)
+
+```
+2.#Mapeamos las rutas metabolicas de KEGG y la informacion asociada:
+
+```{r eval=FALSE}
+
+interpro_map<-mapping_ko(tibble_interpro = interpro_KEGG_long)
+
+head(interpro_map)
+```
+3.Usamos los recursos graficos de rbims: Importante, debemos cambiar el analysis a KEGG, porque el data frame se encuentra disrtribuido así, a pesar de haber empezado con la anotación de interpro. 
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+
+plot_heatmap(tibble_ko = interpro_map,
+             data_experiment = metadata,
+             y_axis = KO,
+             order_y = Module,
+             order_x = Sample_site,
+             split_y = TRUE,
+             analysis = "KEGG",
+             calc="Abundance")
+```
+
+1.**ANÁLISIS DE KEGG A TRAVÉS DE RBIMS**
+
+Comenzaremos leyendo nuestros datos y mapeando contra la base de datos de KEGG, con la función read_ko y mapping_ko.
+Esta función permite recuperar detalles de las rutas metabólicas y realizar un cálculo de las abundancias encontradas en nuestro set de datos. 
+
+```{r message=FALSE, warning=FALSE}
+ko_table<-read_ko(data_kofam ="../Datos_rbims/KEGG/") 
+head(ko_table)
+```
+
+mapping_ko
+
+```{r message=FALSE, warning=FALSE}
+ko_mapp<-mapping_ko(ko_table)
+head(ko_mapp)
+```
+
+Para continuar es importante leer los metadatos.
+
+```{r}
+metadatos<-read_excel("../meta.xlsx") 
+```
+
+
+2.**EL SUBSET DE RUTAS METABÓLICAS**
+
+Rbims contiene una función específica para detallar el análisis de rutas metabolicas. Lo hace a traves de la función get_subset_pathway. La funcion utiliza los siguientes argumentos:
+**mapped_ko_table:** una tabla proveniente de la función mapping_ko.
+**type_of_interest_feature:** alguna columna con atributos importantes para el análisis. Esta columna se usara para hacer los subconjuntos.
+**interest_feature:** un vector con los atributos de interés para el análisis. Serán encontrados a través de su comparación con type_of_interest_feature. 
+
+```{r}
+
+Overview<-c("Naphthalene degradation","Carbon fixation", 
+            "Methane metabolism")
+
+Energy_metabolisms<-ko_mapp %>%
+  drop_na(Cycle) %>%
+  get_subset_pathway(Cycle, Overview) 
+
+head(Energy_metabolisms)
+```
+
+3.**PLOT BUBBLE**
+Rbims puede representar los datos en forma de burbujas a través de la función plot_bubble. Los argumentos son similares que en el heatmap.
+
+**tibble_ko:** la tabla el subset que acabamos de generar
+**x_axis:** corresponde al eje x, puede tomar cualquier valor de las columnas de metabolismo.
+**y_axis:** corresponde al eje y, puede tomar cualquier valor de las columnas de metabolismo.
+**calc:** el tipo de cálculo que realizará rbims, los valores válidos son: Abundance y Binary.
+**analysis:** una tabla proveniente de las funciones read. Corresponde al análisis utilizado para la anotación. 
+**data_experiment:** (opcional), una base de metadatos.
+**color_character:** (opcional), corresponde a alguna columna de metadatos o caracteristica del metabolismo. 
+**order_bins:** (opcional), un vector indicando el orden en el que aparecerán los bins.
+**order_metabolism:** (opcional), un vector indicando el orden en el que aparecerá la caracteristica deseada (pfam/Interpro ID). 
+**color_pallet:** (opcional) un vector de caracteres indicando la paleta de colores.
+**range_size:** un vector numerico indicando el rango de tamaño de los puntos. 
+**x_labs:** (opcional). Da el nombre al eje x.
+**y_labs:** (opcional). Da el nombre al eje y. 
+**text_x:** (opcional). Un vector numerico que indica el tamaño del texto en el eje x. 
+**text_y:** (opcional). Un vector numerico que indica el tamaño del texto en el eje y. 
+
+```{r message=FALSE, warning=FALSE}
+
+plot_bubble(tibble_ko = Energy_metabolisms,
+            x_axis = Bin_name,
+            y_axis = Cycle,
+            analysis="KEGG",
+            calc="Abundance",
+            data_experiment = metadata,
+            color_character = order,
+            range_size = c(2,10),
+            y_labs=FALSE,
+            x_labs=FALSE)   
+```
+
+4.**HEATMAP**
+
+Rbims puede generar heatmaps, con la tabla obtenida anteriormente, podemos graficar los resultados. La funcion tiene las siguientes opciones:
+**tibble_ko:** el subset que acabamos de generar
+**y_axis:** la variable que se graficará en el eje y (KO, Pathway, Modules). El eje x no se puede modificar, corresponde a la variable de los individuos (MAGs/bins). 
+**calc:** el tipo de cálculo que realizará rbims, los valores válidos son: Abundance, Binary y Percentage. 
+**data_experiment:** (opcional), una tabla de metadatos.
+**analysis:** una tabla proveniente de las funciones read. Corresponde al análisis utilizado para la anotación. 
+**scale_option:** una opcion para indicarle si las filas o columnas deberian escalarse. Los valores válidos son: "none" "row" "column".
+**order_y:** es el argumento para ordenar mas detalladamente los valores de las filas (Pathway, Cycle, KO). 
+**order_x:** es el argumento para odernar mas detalladamente las variables de individuos (MAGs/bins) en columnas. 
+**split_y:** valor lógico que indica si se desea partir el eje y basandose en el argumento order_y.
+**color_pallet:** (opcional) un vector de caracteres indicando la paleta de colores.
+
+
+```{r}
+
+plot_heatmap(tibble_ko = Energy_metabolisms, 
+             y_axis = Pathway_cycle,
+             data_experiment = metadata,
+             order_y = Cycle,
+             order_x = order,
+             split_y = T,
+             analysis = "KEGG",
+             calc="Abundance")
+```
+
+5.**OTRO EJEMPLO CON KEGG: UNA VÍA**
+
+```{r}
+policyclic_aromatic_degradation <- c("map00624")  
+
+hydrocarbon_degradation <- ko_mapp %>%
+  drop_na (Pathway) %>%
+  get_subset_pathway(Pathway, policyclic_aromatic_degradation)
+
+head(hydrocarbon_degradation)
+```
+
+**Graficamos:**
+
+```{r message=FALSE, warning=FALSE}
+plot_bubble(tibble_ko = hydrocarbon_degradation,
+            x_axis = Bin_name,
+            y_axis = KO,
+            analysis="KEGG",
+            calc="Abundance",
+            data_experiment = metadata,
+            color_character = order,
+            range_size = c(1,10),
+            y_labs=FALSE,
+            x_labs=FALSE) 
+```
+
+```{r}
+
+plot_heatmap(tibble_ko=hydrocarbon_degradation, 
+             y_axis = KO,
+             data_experiment = metadata,
+             order_y = Module,
+             order_x = order,
+             split_y = T,
+             analysis = "KEGG",
+             #scale_option = "row",
+             calc="Abundance")
+```
+
+**¡PUEDE SER SORPRENDENTEMENTE DETALLADO!**
+
+1.**ANALISIS DE DBCAN A TRAVÉS DE RBIMS**
+
+El análisis de dbCAN usando rbims comienza con la lectura de la anotación con la funcion read_dbcan3.
+
+```{r}
+dbcan_FAMs_profile_T<-read_dbcan3(dbcan_path = "../Datos_rbims/dbCAN/", profile = T) 
+```
+
+De igual forma que con read_interpro, se pueden generar dos perfiles, uno ligeramente mas extenso que el otro. Esto se logra con el argumento del perfil. 
+
+```{r}
+dbcan_FAMs_profile_F<-read_dbcan3(dbcan_path = "../Datos_rbims/dbCAN/",  profile = F) 
+```
+
+2.**Obtenemos las familias mas importantes. La función PCA**
+
+```{r}
+
+important_dbcanFAMs<-get_subset_pca(tibble_rbims=dbcan_FAMs_profile_T, 
+                                    cos2_val=0.98,
+                                    analysis= "dbCAN",
+                                    pca = "Both")
+
+```
+
+
+3.Graficando: Heatmap (argumento de distancia = T)
+```{r}
+plot_heatmap(important_dbcanFAMs, 
+             y_axis = dbCAN_fam, 
+             analysis = "dbCAN",
+             scale_option = "none",
+             distance = T)
+```
+
+**(argumento de distancia = F)**
+
+```{r}
+plot_heatmap(important_dbcanFAMs, 
+             y_axis= dbCAN_fam, 
+             analysis= "dbCAN",
+             scale_option = "none",
+             distance = F)
+```
+
+
+
+4.**Graficando: Plot bubble**
+
+```{r}
+
+metadata <- read_xlsx("../meta.xlsx")
+
+plot_bubble(important_dbcanFAMs, 
+            y_axis=dbCAN_fam, 
+            x_axis=Bin_name, 
+            calc = "Abundance",
+            analysis = "dbCAN", 
+            data_experiment = metadata, 
+            color_character = Bin_name)
+
+```
+
+
+
+
